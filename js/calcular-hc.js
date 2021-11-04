@@ -4,11 +4,11 @@
 let listaAlimentos = [];
 let btnAgregarAlimento = $(".agregarAlimento").get();
 for( let alimentos of btnAgregarAlimento){
-    alimentos.addEventListener("click" , agregarAlimento )
+    alimentos.addEventListener("click" , agregarAlimentoLista )
 }
 console.log(btnAgregarAlimento)
 
-function agregarAlimento(e){
+function agregarAlimentoLista(e){
     let hijo = e.target;
     let padre = hijo.parentNode.parentNode;
 
@@ -29,7 +29,6 @@ function agregarAlimento(e){
 
 
 function mostrarAlimentos(alimento){
-
     let fila = document.createElement("div"); 
     fila.className= "row";
 
