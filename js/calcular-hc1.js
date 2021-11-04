@@ -1,21 +1,26 @@
 let listaAlimentos = [];
 const listarAlimentos = document.getElementById("listaAlimentos");
 let btnQuitarAlimento,  
-    idAlimento = 0; ;
+    idAlimento = 0;     
+    let cantidad= 1;
+
 let btnAgregarAlimento = $(".agregarAlimento").get();
 for( let alimentos of btnAgregarAlimento){
     alimentos.addEventListener("click" , agregarAlimentoLista )
 }
-console.log(btnAgregarAlimento)
 
 
 class Alimento{
-    constructor(id, nombre, porcion, cantidadHC){
+    constructor(id, nombre, pesoPorcion, cantidadHC, img, numPorciones){
         this.id = id;
         this.nombre = nombre;
-        this.porcion = porcion;
+        this.pesoPorcion = pesoPorcion;
         this.cantidadHC = cantidadHC;
+        this.img = img;
+        this.numPorciones = numPorciones;
     }
+
+    
 
 }
 
@@ -39,25 +44,18 @@ function cargarEventos(){
 function agregarAlimentoLista(e){    
     idAlimento+=1;
     let hijo = e.target;
-    let padre = hijo.parentNode.parentNode;
-    
+    let padre = hijo.parentNode.parentNode;    
 
     let nombrealimento = padre.querySelector("h5").textContent;
     let img = padre.querySelector("img").src;
     let peso = padre.querySelector('.pesoGr').textContent;
     let totalHC = padre.querySelector(".hcTotales").textContent;
 
-    const alimento = {
-        id: idAlimento,
-        nombre: nombrealimento,
-        img: img,
-        peso: peso,
-        totalHC: totalHC,
-        cantidad: 1
-    }
+    let alimentosLista = new Alimento(idAlimento, nombrealimento, peso, totalHC , img, cantidad);
+    console.log(alimentosLista)
 
-    listaAlimentos.push(alimento);
-    mostrarAlimentosDOM(alimento);
+    listaAlimentos.push(alimentosLista);
+    mostrarAlimentosDOM(alimentosLista);
 }
 
 
@@ -68,7 +66,8 @@ function mostrarAlimentosDOM(alimento){
 
     fila.innerHTML = `<div class="col-md-2"><img src="${alimento.img} "></div>
                     <div class="col-md-3">${alimento.nombre}</div>
-                    <div class="col-md-5">Peso porción: ${alimento.peso} <br> Gramos HC: ${alimento.totalHC}</div>
+                    <div class="col-md-4">Peso porción: ${alimento.pesoPorcion} <br> Gramos HC: ${alimento.cantidadHC}</div>
+                    <div class="col-md-1 gx-0"><input type="number" class="form-control cantidad" min="1" value=${alimento.numPorciones}></div>
                     <div class="col-md-2"><button class="btn btn-danger quitarAlimento" data-id="${alimento.id}">x</button></div>`
     
     listarAlimentos.appendChild( fila );
@@ -134,10 +133,10 @@ function leerLocalStorage(){
         let fila = document.createElement("div"); 
         fila.className= "row py-3";
         fila.innerHTML = `<div class="col-md-2"><img src="${alimento.img} "></div>
-                        <div class="col-md-2">${alimento.nombre}</div>
-                        <div class="col-md-4">Peso porción: ${alimento.peso} <br> Gramos HC: ${alimento.totalHC}</div>
-                        <div class="col-md-2"><input type="number" class="form-control cantidad" min="1" value=${alimento.cantidad}></div>
-                        <div class="col-md-2"><button class="btn btn-danger quitarAlimento" data-id="${alimento.id}">x</button></div>`
+        <div class="col-md-3">${alimento.nombre}</div>
+        <div class="col-md-4">Peso porción: ${alimento.pesoPorcion} <br> Gramos HC: ${alimento.cantidadHC}</div>
+        <div class="col-md-1 gx-0"><input type="number" class="form-control cantidad" min="1" value=${alimento.numPorciones}></div>
+        <div class="col-md-2"><button class="btn btn-danger quitarAlimento" data-id="${alimento.id}">x</button></div>`
         listarAlimentos.appendChild( fila );
     });
 }
@@ -162,21 +161,15 @@ function vaciarLocalStorage(){
 }
 
 
-//Calcular montos
-function calcularTotal(){
-    let productosLS;
-    let total = 0;
-    productosLS = this.obtenerProductosLocalStorage();
-    for(let i = 0; i < productosLS.length; i++){
-        let cantidadHC = Number(productosLS[i].totalHC * productosLS[i].cantidad);
+//Calcular TOTAL
+$(".calcularHCtotal").on("click", function(){    
+    console.log("entro")
+    let alimentosLS, total = 0;
+    alimentosLS = obtenerAlimentosLocalStorage();
+    for(let i = 0; i < alimentosLS.length; i++){
+        let cantidadHC = Number(alimentosLS[i].cantidadHC * alimentosLS[i].numPorciones);
         total = total + cantidadHC;
-        
+        console.log(total)
     }
-    
-    igv = parseFloat(total * 0.18).toFixed(2);
-    subtotal = parseFloat(total-igv).toFixed(2);
-
-    document.getElementById('subtotal').innerHTML = "S/. " + subtotal;
-    document.getElementById('igv').innerHTML = "S/. " + igv;
-    document.getElementById('total').value = "S/. " + total.toFixed(2);
-}
+    $(".mostrarTotalHC").html(`<h6>Total hidratos de carbono ${total}</h6>`);
+})
