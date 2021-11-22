@@ -162,14 +162,12 @@ function vaciarLocalStorage(){
 
 
 //Calcular TOTAL
-$(".calcularHCtotal").on("click", function(){    
-    console.log("entro")
+$(".calcularHCtotal").on("click", function(){ 
     let alimentosLS, total = 0;
     alimentosLS = obtenerAlimentosLocalStorage();
     for(let i = 0; i < alimentosLS.length; i++){
         let cantidadHC = Number(alimentosLS[i].cantidadHC * alimentosLS[i].numPorciones);
         total = total + cantidadHC;
-        console.log(total)
     }
     $(".mostrarTotalHC").html(`<h6>Total hidratos de carbono ${total}</h6>`);
 })
