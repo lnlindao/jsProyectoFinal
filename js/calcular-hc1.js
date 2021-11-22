@@ -169,5 +169,6 @@ $(".calcularHCtotal").on("click", function(){
         let cantidadHC = Number(alimentosLS[i].cantidadHC * alimentosLS[i].numPorciones);
         total = total + cantidadHC;
     }
-    $(".mostrarTotalHC").fadeIn("slow").html(`<h6>Total hidratos de carbono ${total}</h6>`);
+    $(".mostrarTotalHC").fadeIn(3000).html(`<h6 class="alert alert-light" role="alert">Total hidratos de carbono ${total}</h6>`);
+    
 })
