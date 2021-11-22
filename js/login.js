@@ -17,14 +17,16 @@ $("#login").click(() => {
             $("#statusLogin").html(`<div class="alert alert-success" role="alert">
                                 Bienvenido nuevamente ${datos[posicion].nombre}                                    
                              </div>`);
+                             setTimeout( window.location.href = 'calcular-hc.html',5000);
         }else{
             $("#statusLogin").html(`<div class="alert alert-danger" role="alert">
                                 Los datos ingresados no son correctos                                    
                              </div>`);
         } 
     });
-});
+})
+
+ 
 
 
-    
     
