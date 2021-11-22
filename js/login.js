@@ -14,14 +14,12 @@ $("#login").click(() => {
         if(userOK && password){
             let posicion = datos.indexOf(userOK)
             console.log(posicion)
-            $("form").append(`<div class="alert alert-success" role="alert">
-                                   Los datos ingresados son correctos
-                                    
+            $("#statusLogin").html(`<div class="alert alert-success" role="alert">
+                                Bienvenido nuevamente ${datos[posicion].nombre}                                    
                              </div>`);
         }else{
-            $("form").append(`<div class="alert alert-danger" role="alert">
-                                   Los datos ingresados no son correctos
-                                    
+            $("#statusLogin").html(`<div class="alert alert-danger" role="alert">
+                                Los datos ingresados no son correctos                                    
                              </div>`);
         } 
     });
