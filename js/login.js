@@ -15,9 +15,15 @@ $("#login").click(() => {
             let posicion = datos.indexOf(userOK)
             console.log(posicion)
             $("#statusLogin").html(`<div class="alert alert-success" role="alert">
-                                Bienvenido nuevamente ${datos[posicion].nombre}                                    
+                                Bienvenido nuevamente ${datos[posicion].nombre}   
+                                <br>
+                                Serás redirigido automáticamente  
+                                <iframe style="
+                                width: 100%;
+                                height: 53px;
+                            " src="https://embed.lottiefiles.com/animation/9764"></iframe>                            
                              </div>`);
-                             setTimeout( window.location.href = 'calcular-hc.html',5000);
+                             setTimeout( function(){ window.location.href = 'calcular-hc.html' },2000);
         }else{
             $("#statusLogin").html(`<div class="alert alert-danger" role="alert">
                                 Los datos ingresados no son correctos                                    

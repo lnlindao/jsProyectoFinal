@@ -163,19 +163,23 @@ function vaciarLocalStorage(){
 
 //Calcular TOTAL
 $(".calcularHCtotal").on("click", function(){    
-
+    
     let alimentosLS, total = 0, glucosaObjetivo=120,
         factorDeCorreccion=20;
     let glucosaEnSangreActual = $(".glucosaActual").val();
     alimentosLS = obtenerAlimentosLocalStorage();
 
     if ($(".glucosaActual").val().length <= 0 ) {
+        
+        $(".mostrarTotalHC").fadeOut(100);
         $(".mostrarTotalHC").html(`<div class="alert alert-danger" role="alert">
                                                 Debe ingresar el valor actual de azúcar en sangre
                                                 </div>  `);
                                                 $(".mostrarTotalHC").fadeIn(3000).delay(2000);
                                                 $( ".mostrarTotalHC" ).toggle( "bounce", { times: 3 }, "slow" );
-                                                $( "#glucosaEnSangre" ).focus();
+        $( "#glucosaEnSangre" ).focus();        
+        $(".mostrarTotalHC").fadeIn(2000);
+
     } else {
         for(let i = 0; i < alimentosLS.length; i++){
             let cantidadHC = Number(alimentosLS[i].cantidadHC * alimentosLS[i].numPorciones);
@@ -185,7 +189,7 @@ $(".calcularHCtotal").on("click", function(){
         let bolusCorreccion = (glucosaEnSangreActual - glucosaObjetivo)/factorDeCorreccion;
         console.log(glucosaEnSangreActual)
         let totalEstimado = totalInsulinaHc + bolusCorreccion
-        $(".mostrarTotalHC").fadeIn(3000).html(`
+        $(".mostrarTotalHC").html(`
                                 <div class="row p-3 otrosDatos mb-4">  
                                 <h4 class="mb-3"><strong>Resultados</strong></h4>                              
                                     <div class="col-sm-12">
@@ -200,6 +204,8 @@ $(".calcularHCtotal").on("click", function(){
                                         </div>
                                     </div>
                                 </div>`);
+                                $(".mostrarTotalHC").fadeIn(2000);
+                                
     }
     
     
