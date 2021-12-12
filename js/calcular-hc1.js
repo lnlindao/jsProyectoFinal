@@ -162,13 +162,45 @@ function vaciarLocalStorage(){
 
 
 //Calcular TOTAL
-$(".calcularHCtotal").on("click", function(){ 
-    let alimentosLS, total = 0;
+$(".calcularHCtotal").on("click", function(){    
+
+    let alimentosLS, total = 0, glucosaObjetivo=120,
+        factorDeCorreccion=20;
+    let glucosaEnSangreActual = $(".glucosaActual").val();
     alimentosLS = obtenerAlimentosLocalStorage();
-    for(let i = 0; i < alimentosLS.length; i++){
-        let cantidadHC = Number(alimentosLS[i].cantidadHC * alimentosLS[i].numPorciones);
-        total = total + cantidadHC;
+
+    if ($(".glucosaActual").val().length <= 0 ) {
+        $(".mostrarTotalHC").html(`<div class="alert alert-danger" role="alert">
+                                                Debe ingresar el valor actual de azúcar en sangre
+                                                </div>  `);
+                                                $(".mostrarTotalHC").fadeIn(3000).delay(2000);
+                                                $( ".mostrarTotalHC" ).toggle( "bounce", { times: 3 }, "slow" );
+                                                $( "#glucosaEnSangre" ).focus();
+    } else {
+        for(let i = 0; i < alimentosLS.length; i++){
+            let cantidadHC = Number(alimentosLS[i].cantidadHC * alimentosLS[i].numPorciones);
+            total = total + cantidadHC;
+        }
+        let totalInsulinaHc = total / factorDeCorreccion;
+        let bolusCorreccion = (glucosaEnSangreActual - glucosaObjetivo)/factorDeCorreccion;
+        console.log(glucosaEnSangreActual)
+        let totalEstimado = totalInsulinaHc + bolusCorreccion
+        $(".mostrarTotalHC").fadeIn(3000).html(`
+                                <div class="row p-3 otrosDatos mb-4">  
+                                <h4 class="mb-3"><strong>Resultados</strong></h4>                              
+                                    <div class="col-sm-12">
+                                        <div class="row d-sm-flex align-items-center gy-4">
+                                            <div class="col-8"><b>Bolus corrección</b></div>
+                                            <div class="col-4">${totalInsulinaHc} UI </div>
+                                            <div class="col-8"><b>Bolus por HC</b></div>
+                                            <div class="col-4">${bolusCorreccion} UI </div>
+                                            <hr>
+                                            <div class="col-8"><b>Total Estimado</b></div>                                            
+                                            <div class="col-4">${totalEstimado} UI </div>
+                                        </div>
+                                    </div>
+                                </div>`);
     }
-    $(".mostrarTotalHC").fadeIn(3000).html(`<h6 class="alert alert-light" role="alert">Total hidratos de carbono ${total}</h6>`);
+    
     
 })

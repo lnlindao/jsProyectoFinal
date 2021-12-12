@@ -10,6 +10,8 @@
     <meta name="author" content="">
 
     <title>Insucontrol - Perfil</title>
+    <link rel="shortcut icon" href="./assets/images/insucontrol.ico">
+
 
     <!-- Custom styles for this template-->
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
@@ -44,14 +46,9 @@
                     <span>Perfil</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="calcular-bolus.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Calcular bolus</span></a>
-            </li>
-            <li class="nav-item active">
                 <a class="nav-link" href="calcular-hc.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Calcular HC</span></a>
+                    <span>Calcular bolus insulina</span></a>
             </li>
 
             <!-- Divider -->
@@ -161,17 +158,17 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid px-5">
+                <div class="container">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Calcular Hidratos de carbono</h1>
+                    <div class="row d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Cálculo de bolus de insulina</h1>
                     </div>
 
                     <!-- 
                         INICIO CONTENIDO 
                     -->
-                    <div class="row">
+                    <div class="row justify-content-evenly">
                         <div class="col-md-6">
                             <div class="card-group">
                                 <div class="card">
@@ -204,14 +201,43 @@
                               </div>
                             
                         </div>
-                        <div class="col-md-6 p-3" style="background-color: #a2bbd652;" id="listaDeAlimentos">
-                            <h4>Alimentos agregados</h4>
-                            <hr>
-                            <div id="listaAlimentos"></div>
-                            <hr>
-                            <a href="#" class="btn btn-primary calcularHCtotal">Calcular HC totales</a>
+                        <div class="p-3 col-md-6" style="background-color: #a2bbd652;" id="listaDeAlimentos">
+                            <div id="listaAlimentos" class="HC mb-2">
+                                <h4><strong>Carbohidratos agregados</strong></h4>
+                                <div class="row">
+                                    <div class="col-md-2 tituloTabla">Imagen</div>
+                                    <div class="col-md-3 tituloTabla">Nombre</div>
+                                    <div class="col-md-4 tituloTabla">Info por proción</div>
+                                    <div class="col-md-1 gx-0 tituloTabla">Porciones</div>
+                                </div>
+                            </div>
+                            <div class="p-3 otrosDatos mb-2">                                
+                                <div class="col-sm-12">
+                                    <div class="row d-sm-flex align-items-center gy-4">
+                                        <div class="col-8"><b>Glucosa actual (GS)*</b>
+                                            <button type="button" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" title="Introduzca su nivel actual de azúcar en sangre">
+                                                ?
+                                              </button>
+                                        </div>
+                                        <div class="col-4"><input id="glucosaEnSangre" type="number" class="form-control glucosaActual" min="1"></div>
+                                        <div class="col-8"><b>Otros carbohidratos 
+                                            
+                                            <button type="button" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" title="Puedes introducir los gramos de carbohidratos adicionales consumidos sino lo encuentras en la lista de alimentos.">
+                                                ?
+                                              </button>
+
+
+                                        </b></div>
+                                        <div class="col-4"><input type="number" class="form-control cantidad" min="1"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary calcularHCtotal" type="button">Calcular</button>
+                              </div>
                             <div class="py-5">
-                                <div class="col-md-8 mostrarTotalHC">                                    
+                                <div class="col-md-12 mostrarTotalHC">                                    
                                 </div>
                                 <div class="col-md-4">
                                     <div id="resultadoHC"></div>
@@ -289,9 +315,18 @@
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
 
 </body>
 

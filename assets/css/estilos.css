@@ -270,3 +270,19 @@ a.text-lightred:hover {
 
 .sidebar-brand-icon {
   max-width: 25%; }
+
+#listaAlimentos, .otrosDatos {
+  background: #fff;
+  border-radius: 3px; }
+
+.HC {
+  padding: 30px 0 30px 20px; }
+
+button.btn.btn-dark {
+  border-radius: 128px;
+  height: 29px;
+  padding: 0 10px; }
+
+.tituloTabla {
+  font-weight: 700;
+  font-size: 1rem; }
